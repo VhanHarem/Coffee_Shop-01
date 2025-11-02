@@ -7,6 +7,7 @@
     <link href="../../../../Coffee_Shop-01/public/src/tailwindstyles.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Navbar -->
     <div class="navbar">
         <div class="logo">MyLogo</div>
         <div class="nav-links">
