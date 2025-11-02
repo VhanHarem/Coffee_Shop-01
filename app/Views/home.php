@@ -7,5 +7,7 @@
 </head>
 <body>
     <p> i love codeigniter </p>
+    <a href="<?= site_url('categories') ?>">click</a>
+
 </body>
 </html>
