@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link href="../public/src/tailwindstyles.css" rel="stylesheet">    
+    <link href="../../../../Coffee_Shop-01/public/src/tailwindstyles.css" rel="stylesheet">    
 </head>
 <body>
   <p class="text-red-500">hello world</p>
