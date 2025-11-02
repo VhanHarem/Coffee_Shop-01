@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Home</title>
 </head>
 <body>
   <!DOCTYPE html>
@@ -23,13 +23,13 @@
          <a href="<?= site_url('orders') ?>">Orders</a>
            <a href="<?= site_url('profile') ?>">Profile</a>
         <a href="<?= site_url('stamps') ?>">Stamps</a>
-      <a href="<?= site_url('profile') ?>">Profile</a>
+      <a href="<?= site_url('login') ?>">LogIn</a>
     </div>
   </div>
 
   <!-- Body -->
   <div class="body">
-    <h1>Welcome to My Homepage</h1>
+    <h1>Randyy Wagggg!!! Jukopoo</h1>
     <p>This is the main content area.</p>
   </div>
 
