@@ -19,23 +19,30 @@
         </div>
     </div>
 
-    <h1 class="">This is the Stamps Page</h1>
+    <main>
+        <h1 class="">This is the Stamps Page</h1>
 
-    <div id="stamps" class="grid grid-cols-4 gap-4 mb-4">
-                
-        <div class="" value="stamped">Stamp 1</div>
-        <div class="" value="stamped">Stamp 2</div>
-        <div class="" value="stamped">Stamp 3</div>
-        <div class="" value="default">Stamp 4</div>
-        <div class="" value="default">Stamp 5</div>
-        <div class="" value="default">Stamp 6</div>
-        <div class="" value="stamped">Stamp 7</div>
-        <div class="" value="stamped">Stamp 8</div>
-        <div class="" value="stamped">Stamp 9</div>
-        <div class="" value="default">Stamp 10</div>
-        
-    </div> 
+        <h1 class="">Loyalty Card</h1>
+        <div id="stamps" class="grid grid-cols-4 gap-4 mb-4">
+                    
+            <div class="" value="stamped">Stamp 1</div>
+            <div class="" value="stamped">Stamp 2</div>
+            <div class="" value="stamped">25% OFF</div>
+            <div class="" value="default">Stamp 4</div>
+            <div class="" value="default">Stamp 5</div>
+            <div class="" value="default">50% OFF</div>
+            <div class="" value="stamped">Stamp 7</div>
+            <div class="" value="stamped">Stamp 8</div>
+            <div class="" value="stamped">Stamp 9</div>
+            <div class="" value="default">FREE COFFEE</div>
+            
+        </div> 
+    <main>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 My Website. All rights reserved.</p>
+    </footer>
 </body>
 
 
