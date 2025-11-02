@@ -7,9 +7,6 @@
     <link href="../public/src/tailwindstyles.css" rel="stylesheet">    
 </head>
 <body>
-    <h1 class = "text-red-300">RANDY WAG MO SIRAIN!</h1>
-    <a href="<?= site_url('categories') ?>">click</a>
-    <div class="bg-amber-300 p-1 rounded-md w-[50px] h-[50px]"></div>
-     <div class="bg-amber-300 p-1 rounded-md w-[50px] h-[50px]"></div>
+  <p class="text-red-500">hello world</p>
 </body>
 </html>
