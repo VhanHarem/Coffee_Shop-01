@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <p> i love codeigniter </p>
+    <p class = "c"> i love codeigniter </p>
     <a href="<?= site_url('categories') ?>">click</a>
 
 </body>
