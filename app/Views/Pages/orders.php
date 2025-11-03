@@ -49,6 +49,7 @@
 
 
         <div class="bg-amber-700">
+            <form>
             <div>Order Details</div>
                 <div class="w-[450px] ">
                     <div class="input-container grid grid-flow-row">
@@ -71,20 +72,21 @@
                             <label>Email Address</label>
                     </div>
                     <div class="input-container grid grid-flow-row">
-                        <textarea type="textarea" required></textarea>
+                        <textarea type="textarea"></textarea>
                             <label>Additional Requests or Description</label>
                     </div>
                 </div>
         </div>
 
         <div class=" bg-amber-400">
+            
             <h1 class="">Confirmations</h1>
-                <input type="checkbox" class="m-2"/><span>I hereby confirm that all of my details are correct and final.</span>
-                <input type="checkbox" class="m-2"/><span>I have entered the right email address to confirm my order and be notified about my stamps.</span>    
-                <input type="checkbox" class="m-2"/><span>I am paying a total of {{$totalOrderPrice}} to the cashier.</span>
+                <input type="checkbox" required class="m-2"/><span>I hereby confirm that all of my details are correct and final.</span>
+                <input type="checkbox" required class="m-2"/><span>I have entered the right email address to confirm my order and be notified about my stamps.</span>    
+                <input type="checkbox" required class="m-2"/><span>I am paying a total of {{$totalOrderPrice}} to the cashier.</span>
                                 
-            <button class="mt-5 p-2 rounded-lg bg-neutral-50 text-neutral-900 hover:bg-green-500 hover:scale-[1.07] hover:text-neutral-50 transition duration-300">Confirm</button>
-                            
+            <button type="submit" class="mt-5 p-2 rounded-lg bg-neutral-50 text-neutral-900 hover:bg-green-500 hover:scale-[1.07] hover:text-neutral-50 transition duration-300 cursor-pointer">Confirm</button>
+            </form>            
         </div>
     </main>
 </body>
