@@ -36,7 +36,7 @@
       }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col">
+<body class="min-h-screen bg-gradient-to-bg from-amber-50 to-orange-50 flex flex-col">
 
     <!-- ===== Navigation Bar (aligned with home navigation) ===== -->
      <header class="bg-orange-600 fixed w-full top-0 z-50">
@@ -82,103 +82,128 @@
     <div class="h-16 md:h-20"></div>
 
     <!-- ======================
-         Login Card (center)
+         Login Card (center) - Combined Sign in / Sign up tabs
          ====================== -->
    <main class="w-full max-w-md mx-auto px-4 py-6">
-  <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 glass">
-    <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-semibold text-orange-800">Login</h2>
+  <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 glass auth-tabs">
+    <!-- Radio inputs control the tabs -->
+    <input type="radio" name="auth-tab" id="tab-login" checked>
+    <input type="radio" name="auth-tab" id="tab-signup">
+
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <h2 class="text-2xl font-semibold text-orange-800">Account</h2>
+      </div>
     </div>
 
-    <form action="/login" method="post" class="mt-6 space-y-4">
-      <label class="block">
-        <span class="text-sm text-gray-600">Username or email</span>
-        <input name="username" type="text" required 
-          class="mt-1 block w-full rounded-md border-gray-200 shadow-sm focus:border-orange-500 focus:ring-orange-200 focus:ring-1 px-3 py-2" 
-          placeholder="you@example.com or username">
-      </label>
+    <style>
+      /* small tab-show/hide using radios */
+      .auth-tabs input[type="radio"] { display: none; }
+      .auth-tabs .forms > .panel { display: none; }
+      #tab-login:checked ~ .forms .panel-login { display: block; }
+      #tab-signup:checked ~ .forms .panel-signup { display: block; }
+      /* active tab styles (labels) */
+      #tab-login:checked ~ .flex label[for="tab-login"],
+      #tab-signup:checked ~ .flex label[for="tab-signup"] { background: rgba(255,255,255,0); }
+    </style>
 
-      <!-- Password field with show/hide toggle -->
-      <label class="block">
-        <span class="text-sm text-gray-600">Password</span>
-        <div class="relative mt-1">
-          <input id="login-password" name="password" type="password" required 
-            class="block w-full rounded-md border-gray-200 shadow-sm focus:border-orange-500 focus:ring-orange-200 focus:ring-1 px-3 py-2 pr-12" 
-            placeholder="••••••••">
-          <button type="button" id="toggle-login-pass" aria-label="Show password" 
-            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 pw-toggle">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-      </label>
+    <div class="forms">
+      <!-- Login panel -->
+      <div class="panel panel-login">
+        <form action="/login" method="post" class="mt-2 space-y-4">
+          <label class="block">
+            <span class="text-sm text-gray-600">Username or email</span>
+            <input name="username" type="text" required
+              class="mt-1 block w-full rounded-md border-gray-200 shadow-sm focus:border-orange-500 focus:ring-orange-200 focus:ring-1 px-3 py-2"
+              placeholder="you@example.com or username">
+          </label>
 
-      <div class="flex items-center justify-between">
-        <label class="inline-flex items-center gap-2 text-sm text-gray-600">
-          <input type="checkbox" name="remember" class="rounded border-gray-300 text-orange-600 focus:ring-orange-500">
-          Remember me
-        </label>
-        <a href="#" class="text-sm text-orange-600 hover:underline">Forgot password?</a>
+          <label class="block">
+            <span class="text-sm text-gray-600">Password</span>
+            <div class="relative mt-1">
+              <input id="login-password" name="password" type="password" required
+                class="block w-full rounded-md border-gray-200 shadow-sm focus:border-orange-500 focus:ring-orange-200 focus:ring-1 px-3 py-2 pr-12"
+                placeholder="••••••••">
+              <button type="button" id="toggle-login-pass" aria-label="Show password"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 pw-toggle">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </label>
+
+          <div class="flex items-center justify-between">
+            <label class="inline-flex items-center gap-2 text-sm text-gray-600">
+              <input type="checkbox" name="remember" class="rounded border-gray-300 text-orange-600 focus:ring-orange-500">
+              Remember me
+            </label>
+            <a href="#" class="text-sm text-orange-600 hover:underline">Forgot password?</a>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <button type="submit" class="w-full bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition">
+              Sign in
+            </button>
+            <div class="text-center">
+              <span class="text-sm text-gray-500">Don't have an account? </span>
+              <label for="tab-signup" class="text-sm text-orange-600 hover:underline cursor-pointer">Create account</label>
+            </div>
+          </div>
+        </form>
       </div>
 
-      <div class="flex flex-col gap-3">
-        <button type="submit" class="w-full bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition">
-          Sign in
-        </button>
-        <div class="text-center">
-          <span class="text-sm text-gray-500">Don't have an account? </span>
-          <a href="#" class="text-sm text-orange-600 hover:underline">Create account</a>
-        </div>
+      <!-- Signup panel -->
+      <div class="panel panel-signup">
+        <form id="signup-form" method="post" action="/signup" class="space-y-4">
+          <label class="block">
+            <span class="text-sm text-gray-600">Username</span>
+            <input name="username" required class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="choose a username">
+          </label>
+
+          <label class="block">
+            <span class="text-sm text-gray-600">Email</span>
+            <input id="signup-email" name="email" type="email" required autocomplete="email" list="email-suggestions" class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="name@example.com">
+            <datalist id="email-suggestions"></datalist>
+          </label>
+
+          <label class="block">
+            <span class="text-sm text-gray-600">Password</span>
+            <div class="relative mt-1">
+              <input id="signup-pass" name="password" type="password" required class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 pr-12 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="min 8 characters">
+              <button type="button" id="toggle-signup-pass" aria-label="Show password" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 pw-toggle">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </label>
+
+          <div class="flex items-center justify-between">
+            <button type="submit" class="bg-orange-600 text-white px-5 py-2 rounded-full hover:bg-orange-700 transition">Sign up</button>
+            <label for="tab-login" class="text-sm text-gray-600 hover:underline cursor-pointer">Cancel</label>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
 
     <p class="mt-6 text-xs text-gray-500 text-center">
-      By signing in you agree to our <a href="#" class="text-orange-600 underline">Terms</a>
+      By continuing you agree to our <a href="#" class="text-orange-600 underline">Terms</a>
     </p>
   </div>
 </main>
-    <!-- Hidden Signup Modal (kept but not triggered by left panel) -->
-    <div id="signup-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4">
-      <div id="signup-overlay" class="absolute inset-0 bg-black/40"></div>
-      <div class="relative z-10 w-full max-w-xl bg-white rounded-lg shadow-xl overflow-hidden">
-        <div class="flex items-center justify-between p-4 border-b">
-          <h3 class="text-lg font-semibold text-orange-800">Create an account</h3>
-          <button id="close-signup" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
+
+    <!-- Order-required popup (triggers when .order-now is clicked) -->
+    <div id="order-required-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4">
+      <div id="order-overlay" class="absolute inset-0 bg-black/40"></div>
+      <div class="relative z-10 w-full max-w-md bg-white rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-orange-800">Sign in first</h3>
+        <p class="mt-2 text-sm text-gray-600">Don't have an account? Create one now.</p>
+        <div class="mt-4 flex gap-3 justify-end">
+          <button id="order-signin" class="bg-white border border-gray-200 px-4 py-2 rounded-full text-gray-700 hover:bg-gray-50">Sign in</button>
+          <button id="order-create" class="bg-orange-600 text-white px-4 py-2 rounded-full hover:bg-orange-700">Create an account</button>
         </div>
-
-        <div class="p-6">
-          <form id="signup-form" method="post" action="/signup" class="space-y-4">
-            <label class="block">
-              <span class="text-sm text-gray-600">Username</span>
-              <input name="username" required class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="choose a username">
-            </label>
-
-            <label class="block">
-              <span class="text-sm text-gray-600">Email</span>
-              <input id="signup-email" name="email" type="email" required autocomplete="email" list="email-suggestions" class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="name@example.com">
-              <datalist id="email-suggestions"></datalist>
-            </label>
-
-            <label class="block">
-              <span class="text-sm text-gray-600">Password</span>
-              <div class="relative mt-1">
-                <input id="signup-pass" name="password" type="password" required class="mt-1 block w-full rounded-md border-gray-200 shadow-sm px-3 py-2 pr-12 focus:border-orange-500 focus:ring-orange-200 focus:ring-1" placeholder="min 8 characters">
-                <button type="button" id="toggle-signup-pass" aria-label="Show password" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 pw-toggle">
-                  <i class="fas fa-eye"></i>
-                </button>
-              </div>
-            </label>
-
-            <div class="flex items-center justify-between">
-              <button type="submit" class="bg-orange-600 text-white px-5 py-2 rounded-full hover:bg-orange-700 transition">Sign up</button>
-              <button type="button" id="cancel-signup" class="text-sm text-gray-600 hover:underline">Cancel</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="p-4 text-xs text-gray-500 border-t">We will send a confirmation email. You can use google, yahoo, outlook or other providers.</div>
       </div>
     </div>
 
+    <!-- Hidden legacy signup modal removed (signup is inside the card now) -->
+    <!-- ...existing code... -->
     <!-- Scripts -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -187,27 +212,7 @@
         const menu = document.getElementById('mobile-menu');
         if (menuBtn && menu) menuBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
 
-        // modal (signup) controls
-        const modal = document.getElementById('signup-modal');
-        const overlay = document.getElementById('signup-overlay');
-        const openBtns = [
-          document.getElementById('open-signup'),
-          document.getElementById('open-signup-2'),
-          document.getElementById('open-signup-mobile')
-        ];
-        const closeBtn = document.getElementById('close-signup');
-        const cancelBtn = document.getElementById('cancel-signup');
-
-        function showModal() { modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden'; }
-        function hideModal() { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = ''; }
-
-        openBtns.forEach(b => { if (b) b.addEventListener('click', showModal); });
-        if (closeBtn) closeBtn.addEventListener('click', hideModal);
-        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
-        if (overlay) overlay.addEventListener('click', hideModal);
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
-
-        // email suggestions (signup modal)
+        // email suggestions (signup panel)
         const emailInput = document.getElementById('signup-email');
         const datalist = document.getElementById('email-suggestions');
         const COMMON_DOMAINS = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com'];
@@ -241,6 +246,63 @@
         }
         initPasswordToggle('toggle-login-pass','login-password');
         initPasswordToggle('toggle-signup-pass','signup-pass');
+
+        // Handle showing signup tab via hash or query param
+        function openSignupTabIfRequested() {
+          const hash = location.hash || '';
+          const params = new URLSearchParams(location.search);
+          if (hash.toLowerCase() === '#signup' || params.get('tab') === 'signup') {
+            const signupRadio = document.getElementById('tab-signup');
+            if (signupRadio) signupRadio.checked = true;
+          }
+        }
+        openSignupTabIfRequested();
+
+        // Order-required modal logic (delegated)
+        const orderModal = document.getElementById('order-required-modal');
+        const orderOverlay = document.getElementById('order-overlay');
+        const btnSignin = document.getElementById('order-signin');
+        const btnCreate = document.getElementById('order-create');
+
+        function showOrderModal() { if (orderModal) orderModal.classList.remove('hidden'), orderModal.classList.add('flex'), document.body.style.overflow = 'hidden'; }
+        function hideOrderModal() { if (orderModal) orderModal.classList.add('hidden'), orderModal.classList.remove('flex'), document.body.style.overflow = ''; }
+
+        // delegate clicks on .order-now
+        document.addEventListener('click', (e) => {
+          const target = e.target.closest && e.target.closest('.order-now');
+          if (target) {
+            e.preventDefault();
+            showOrderModal();
+          }
+        });
+
+        if (orderOverlay) orderOverlay.addEventListener('click', hideOrderModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideOrderModal(); });
+
+        // Buttons in modal
+        if (btnSignin) btnSignin.addEventListener('click', () => {
+          // if already on login page, show sign-in tab, otherwise navigate to login
+          if (location.pathname.endsWith('/login')) {
+            const loginRadio = document.getElementById('tab-login');
+            if (loginRadio) loginRadio.checked = true;
+            hideOrderModal();
+          } else {
+            location.href = '/login';
+          }
+        });
+
+        if (btnCreate) btnCreate.addEventListener('click', () => {
+          // navigate to login with hash to open signup; if on page, just switch tab
+          if (location.pathname.endsWith('/login')) {
+            const signupRadio = document.getElementById('tab-signup');
+            if (signupRadio) signupRadio.checked = true;
+            hideOrderModal();
+            history.replaceState(null, '', '/login#signup');
+          } else {
+            location.href = '/login#signup';
+          }
+        });
+
       });
     </script>
 </body>
