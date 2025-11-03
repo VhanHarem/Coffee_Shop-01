@@ -13,6 +13,49 @@
     <link rel="stylesheet" href="<?= base_url('src/tailwindstyles.css') ?>">
 
     <style>
+      /* Mobile menu animation */
+.mobile-menu-enter {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.mobile-menu-enter.show {
+    max-height: 400px; /* Adjust based on your menu height */
+}
+
+/* Hamburger icon animation */
+.hamburger-icon {
+    position: relative;
+    width: 24px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.hamburger-icon span {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    left: 0;
+}
+
+.hamburger-icon span:nth-child(1) { top: 0; }
+.hamburger-icon span:nth-child(2) { top: 9px; }
+.hamburger-icon span:nth-child(3) { top: 18px; }
+
+/* Animated X state */
+.hamburger-icon.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.hamburger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-icon.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+      body { font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
         /* Carousel core styles */
         .carousel-container { position: relative; height: 600px; }
         .carousel-slide {
@@ -114,7 +157,7 @@
 
                         <!-- Right: image -->
                         <div class="order-2 md:order-2 mt-6 md:mt-0 h-64 md:h-96">
-                            <img src="<?= base_url('assets/images/carousel/espresso.jpg') ?>" alt="Classic Espresso" class="carousel-image rounded-r-lg">
+                            <img src="/Coffee_Shop-01/assets/images/randy.png" alt="Classic Espresso" class="carousel-image rounded-r-lg">
                         </div>
                     </div>
                 </article>
@@ -182,7 +225,7 @@
                         </div>
 
                         <div class="order-2 md:order-2 mt-6 md:mt-0 h-64 md:h-96">
-                            <img src="<?= base_url('assets/images/carousel/cappuccino.jpg') ?>" alt="Classic Cappuccino" class="carousel-image rounded-r-lg">
+                            <img src="/Coffee_Shop-01/assets\images\luh.png" alt="Classic Cappuccino" class="carousel-image rounded-r-lg">
                         </div>
                     </div>
                 </article>
