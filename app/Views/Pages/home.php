@@ -7,7 +7,7 @@
 
     <!-- Tailwind (dev CDN) + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
 
     <!-- Project styles (optional override) -->
     <link rel="stylesheet" href="<?= base_url('src/tailwindstyles.css') ?>">
@@ -19,7 +19,7 @@
             position: absolute; inset: 0; width: 100%;
             opacity: 0; pointer-events: none;
             transition: opacity .6s ease;
-            display: grid; grid-template-columns: 1fr; /* becomes two columns on md via inner classes */
+            display: grid; grid-template-columns: 1fr;
         }
         .carousel-slide.active { opacity: 1; pointer-events: auto; }
         .carousel-image { width: 100%; height: 100%; object-fit: cover; }
@@ -30,11 +30,11 @@
 
     <!-- ===== Header / Navbar ===== -->
     <header class="bg-orange-600 fixed w-full top-0 z-50">
-        <nav class="container mx-auto px-6 py-3">
+        <nav class="container mx-auto px-2 py-3">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="<?= base_url('assets/images/logo.png') ?>" alt="Coffee Haven logo" class="h-10">
+                    <img src="/Coffee_Shop-01/assets/images/logo.png" alt="Coffee Haven logo" class="h-10">
                     <span class="text-white text-xl font-bold ml-3">Coffee Haven</span>
                 </div>
 
@@ -85,7 +85,6 @@
                     <div class="p-8 md:p-12 md:grid md:grid-cols-2 md:gap-6 items-center">
                         <!-- Left: description / CTA / controls -->
                         <div class="order-1 md:order-1">
-                            <!-- Slide label (commented) -->
                             <!-- description block -->
                             <h2 class="text-3xl md:text-4xl font-bold text-orange-800 mb-4">Classic Espresso</h2>
                             <p class="text-lg text-gray-700 mb-4">Rich and smooth single-origin espresso with perfect crema.</p>
@@ -98,7 +97,8 @@
 
                             <!-- CTA + inline nav controls (beside CTA on all screen sizes) -->
                             <div class="flex items-center gap-3">
-                                <button class="bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition">Order Now</button>
+                                <!-- added data-product and class 'order-now' -->
+                                <button class="order-now bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition" data-product="Classic Espresso">Order Now</button>
 
                                 <!-- Inline nav controls -->
                                 <div class="flex items-center gap-2">
@@ -133,7 +133,8 @@
                             </ul>
 
                             <div class="flex items-center gap-3">
-                                <button class="bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition">Order Now</button>
+                                <!-- added data-product and class 'order-now' -->
+                                <button class="order-now bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition" data-product="Caramel Latte">Order Now</button>
 
                                 <div class="flex items-center gap-2">
                                     <button class="carousel-prev bg-orange-600/90 text-white p-3 rounded-full hover:bg-orange-700 transition" aria-label="Previous slide" data-slide="-1">
@@ -147,7 +148,7 @@
                         </div>
 
                         <div class="order-2 md:order-2 mt-6 md:mt-0 h-64 md:h-96">
-                            <img src="<?= base_url('assets/images/carousel/latte.jpg') ?>" alt="Caramel Latte" class="carousel-image rounded-r-lg">
+                            <img src="/Coffee_Shop-01/assets/images/car.png" alt="Caramel Latte" alt="Caramel Latte" class="carousel-image rounded-r-lg">
                         </div>
                     </div>
                 </article>
@@ -166,7 +167,8 @@
                             </ul>
 
                             <div class="flex items-center gap-3">
-                                <button class="bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition">Order Now</button>
+                                <!-- added data-product and class 'order-now' -->
+                                <button class="order-now bg-orange-600 text-white px-5 py-3 rounded-full hover:bg-orange-700 transition" data-product="Classic Cappuccino">Order Now</button>
 
                                 <div class="flex items-center gap-2">
                                     <button class="carousel-prev bg-orange-600/90 text-white p-3 rounded-full hover:bg-orange-700 transition" aria-label="Previous slide" data-slide="-1">
@@ -214,7 +216,7 @@
             const nextButtons = Array.from(document.querySelectorAll('.carousel-next'));
             let current = 0;
             let autoTimer = null;
-            const AUTO_MS = 5000;
+            const AUTO_MS = 4000;
 
             // --- helper: show slide by index ---
             function showSlide(index) {
@@ -251,6 +253,33 @@
                 container.addEventListener('mouseenter', stopAuto);
                 container.addEventListener('mouseleave', startAuto);
             }
+
+            // -----------------------------
+            // Order button behavior
+            // - If user has account (logged in) -> go to orders page (include product)
+            // - If not -> go to login page and include redirect back to order
+            // -----------------------------
+            // PHP outputs a JS boolean for login state
+            const isLoggedIn = <?= json_encode((bool) (session() ? session()->has('user_id') : false)) ?>;
+            const ordersUrlBase = '<?= site_url('orders') ?>';
+            const loginUrl = '<?= site_url('login') ?>';
+
+            // Attach click handlers to all order buttons
+            document.querySelectorAll('.order-now').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const product = btn.dataset.product || '';
+                    const orderUrl = ordersUrlBase + (product ? ('?product=' + encodeURIComponent(product)) : '');
+                    if (isLoggedIn) {
+                        // If already logged in go directly to orders page
+                        window.location.href = orderUrl;
+                    } else {
+                        // Not logged in: redirect to login and pass return URL
+                        const redirectTo = orderUrl;
+                        window.location.href = loginUrl + '?redirect=' + encodeURIComponent(redirectTo);
+                    }
+                });
+            });
+
         });
     </script>
 </body>
