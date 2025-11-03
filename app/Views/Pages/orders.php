@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders</title>
-    <link href="../../../../Coffee_Shop-01/public/src/tailwindstyles.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url('src/tailwindstyles.css') ?>">
     
 </head>
 <body>
